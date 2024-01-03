@@ -19,7 +19,7 @@ export default function Result() {
 	}, [txt, i, speed, typed_message]);
 
 	useEffect(() => {
-		typeWriter(); // Correctly call the typeWriter function
+		typeWriter(); 
 	}, [typeWriter, context.handleResult]);
 
 	return (

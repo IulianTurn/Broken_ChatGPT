@@ -56,7 +56,7 @@ const MyProvider = ({ children }) => {
 		setState({
 			screen: 0,
 			question: "",
-			result: "",
+			result: "Can not answer right now.",
 		});
 	};
 

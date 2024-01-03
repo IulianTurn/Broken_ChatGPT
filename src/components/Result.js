@@ -1,4 +1,10 @@
-import { useContext, useState, useEffect } from "react";
+import React, {
+	useContext,
+	useState,
+	useEffect,
+	useCallback,
+	useRef,
+} from "react";
 import { MyContext } from "../context";
 
 export default function Result() {
@@ -8,17 +14,23 @@ export default function Result() {
 	let i = 0;
 	let txt = context.state.result;
 	let speed = 100;
-	let typed_message = "";
-	console.log(context.state.result);
-	function typeWriter() {
+
+	// Use useRef for mutable value
+	const typed_message = useRef("");
+
+	const typeWriter = useCallback(() => {
 		if (i < txt.length) {
-			setAnswer((typed_message += txt.charAt(i)));
+			// Access the current value using .current
+			typed_message.current += txt.charAt(i);
+			setAnswer(typed_message.current);
 			i++;
 			setTimeout(typeWriter, speed);
 		}
-	}
+	}, [txt, i, speed, typed_message, setAnswer]);
 
-	useEffect(() => typeWriter, [context.handleResult]);
+	useEffect(() => {
+		typeWriter();
+	}, [typeWriter, context.handleResult]);
 
 	return (
 		<div>
